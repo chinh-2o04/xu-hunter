@@ -1,94 +1,75 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f8f9fc;
-  color: #333;
-  margin: 0;
-  padding: 20px;
+let kpiGoal = 250000;
+let kpiLeft = parseInt(localStorage.getItem("kpiLeft")) || 250000;
+let totalBonus = parseInt(localStorage.getItem("totalBonus")) || 0;
+let workEntries = JSON.parse(localStorage.getItem("workEntries")) || [];
+
+// Tự động set ngày hôm nay khi trang load
+document.addEventListener("DOMContentLoaded", function () {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('dayInput').value = today;
+
+  document.getElementById("kpiLeft").innerText = kpiLeft;
+  document.getElementById("totalBonus").innerText = totalBonus;
+
+  for (let entry of workEntries) {
+    addRowToTable(entry);
+  }
+});
+
+function addEntry() {
+  let day = document.getElementById('dayInput').value;
+  let gom = parseInt(document.getElementById('xuGomInput').value);
+  let done = parseInt(document.getElementById('xuDoneInput').value);
+
+  if (!day || isNaN(gom) || isNaN(done)) {
+    alert("Vui lòng nhập đầy đủ thông tin ngày, xu gom và xu done.");
+    return;
+  }
+
+  let bonus = 0;
+  let total = gom + done;
+  if (total > 11000) bonus = 1000;
+  else if (total > 8000) bonus = 500;
+
+  kpiLeft -= gom;
+  totalBonus += bonus;
+
+  let entry = { day, gom, done, bonus };
+  workEntries.push(entry);
+
+  addRowToTable(entry);
+  document.getElementById("kpiLeft").innerText = kpiLeft;
+  document.getElementById("totalBonus").innerText = totalBonus;
+
+  localStorage.setItem("kpiLeft", kpiLeft);
+  localStorage.setItem("totalBonus", totalBonus);
+  localStorage.setItem("workEntries", JSON.stringify(workEntries));
+
+  document.getElementById('xuGomInput').value = '';
+  document.getElementById('xuDoneInput').value = '';
 }
 
-header {
-  text-align: center;
-  margin-bottom: 20px;
+function addRowToTable(entry) {
+  let row = `<tr><td>${entry.day}</td><td>${entry.gom}</td><td>${entry.done}</td><td>${entry.bonus}</td></tr>`;
+  document.querySelector("#workTable tbody").innerHTML += row;
 }
 
-h1 {
-  color: #0077cc;
-  font-size: 2.2em;
-}
+function resetData() {
+  if (!confirm("Bạn chắc chắn muốn xóa toàn bộ dữ liệu không? Hành động này không thể hoàn tác.")) {
+    return;
+  }
 
-.slogan {
-  font-style: italic;
-  color: #555;
-}
+  kpiLeft = kpiGoal;
+  totalBonus = 0;
+  workEntries = [];
 
-.kpi-box {
-  background: #dff0ff;
-  padding: 15px;
-  border-left: 5px solid #0077cc;
-  margin-bottom: 25px;
-  border-radius: 5px;
-}
+  localStorage.setItem("kpiLeft", kpiLeft);
+  localStorage.setItem("totalBonus", totalBonus);
+  localStorage.setItem("workEntries", JSON.stringify(workEntries));
 
-.kpi-box p {
-  margin: 5px 0;
-  font-size: 1.1em;
-}
+  document.getElementById("kpiLeft").innerText = kpiLeft;
+  document.getElementById("totalBonus").innerText = totalBonus;
+  document.querySelector("#workTable tbody").innerHTML = "";
 
-.form {
-  margin-bottom: 20px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.form input {
-  padding: 8px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  background: #0077cc;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 1em;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #005fa3;
-}
-
-button.danger {
-  background-color: #e74c3c;
-}
-
-button.danger:hover {
-  background-color: #c0392b;
-}
-
-.table-section h3 {
-  margin-bottom: 10px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-th {
-  background: #0077cc;
-  color: white;
+  alert("Dữ liệu đã được xóa!");
 }
