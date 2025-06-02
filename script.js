@@ -1,45 +1,94 @@
-let kpiGoal = 250000;
-let kpiLeft = localStorage.getItem("kpiLeft") || 250000;
-let totalBonus = localStorage.getItem("totalBonus") || 0;
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f9fc;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
 
-// Tự động set ngày hôm nay
-document.addEventListener("DOMContentLoaded", function () {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('dayInput').value = today;
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  // Cập nhật KPI ban đầu
-  document.getElementById("kpiLeft").innerText = kpiLeft;
-  document.getElementById("totalBonus").innerText = totalBonus;
-});
+h1 {
+  color: #0077cc;
+  font-size: 2.2em;
+}
 
-function addEntry() {
-  let day = document.getElementById('dayInput').value;
-  let gom = parseInt(document.getElementById('xuGomInput').value);
-  let done = parseInt(document.getElementById('xuDoneInput').value);
+.slogan {
+  font-style: italic;
+  color: #555;
+}
 
-  if (!day || isNaN(gom) || isNaN(done)) {
-    alert("Vui lòng nhập đầy đủ thông tin ngày, xu gom và xu done.");
-    return;
-  }
+.kpi-box {
+  background: #dff0ff;
+  padding: 15px;
+  border-left: 5px solid #0077cc;
+  margin-bottom: 25px;
+  border-radius: 5px;
+}
 
-  let bonus = 0;
-  let total = gom + done;
+.kpi-box p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
 
-  if (total > 11000) bonus = 1000;
-  else if (total > 8000) bonus = 500;
+.form {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-  kpiLeft -= gom;
-  totalBonus = parseInt(totalBonus) + bonus;
+.form input {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-  let row = `<tr><td>${day}</td><td>${gom}</td><td>${done}</td><td>${bonus}</td></tr>`;
-  document.querySelector("#workTable tbody").innerHTML += row;
+button {
+  background: #0077cc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  document.getElementById("kpiLeft").innerText = kpiLeft;
-  document.getElementById("totalBonus").innerText = totalBonus;
+button:hover {
+  background: #005fa3;
+}
 
-  localStorage.setItem("kpiLeft", kpiLeft);
-  localStorage.setItem("totalBonus", totalBonus);
+button.danger {
+  background-color: #e74c3c;
+}
 
-  document.getElementById('xuGomInput').value = '';
-  document.getElementById('xuDoneInput').value = '';
+button.danger:hover {
+  background-color: #c0392b;
+}
+
+.table-section h3 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #0077cc;
+  color: white;
 }
