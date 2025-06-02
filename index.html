@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đếm Xu Mỗi Ngày</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>💰 Đếm Xu Mỗi Ngày</h1>
+    <p class="slogan">🚀 Làm hăng say – Xu về tay!</p>
+  </header>
+
+  <section class="kpi-box">
+    <p>🎯 Mục tiêu tháng: <span id="kpiGoal">250000</span> xu</p>
+    <p>📉 Còn lại: <span id="kpiLeft">250000</span> xu</p>
+    <p>🏆 Tổng thưởng tích lũy: <span id="totalBonus">0</span> xu</p>
+  </section>
+
+  <section class="form">
+    <input type="date" id="dayInput">
+    <input type="number" id="xuGomInput" placeholder="Xu gom">
+    <input type="number" id="xuDoneInput" placeholder="Xu done">
+    <button onclick="addEntry()">➕ Thêm</button>
+  </section>
+
+  <section class="table-section">
+    <h3>📅 Lịch sử làm việc</h3>
+    <table id="workTable">
+      <thead>
+        <tr><th>Ngày</th><th>Xu gom</th><th>Xu done</th><th>Thưởng</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
