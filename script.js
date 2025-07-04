@@ -1,75 +1,56 @@
-let kpiGoal = 250000;
-let kpiLeft = parseInt(localStorage.getItem("kpiLeft")) || 250000;
-let totalBonus = parseInt(localStorage.getItem("totalBonus")) || 0;
-let workEntries = JSON.parse(localStorage.getItem("workEntries")) || [];
+function filterEmails() {
+    const input = document.getElementById("inputEmails").value.trim();
+    const lines = input.split(/\r?\n/);
+    const emails = [];
 
-// Tự động set ngày hôm nay khi trang load
-document.addEventListener("DOMContentLoaded", function () {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('dayInput').value = today;
+    lines.forEach((line, index) => {
+        const cleaned = line.replace(/\|/g, " ").trim();
+        const parts = cleaned.split(/\s+/);
+        if (parts.length >= 1 && validateEmail(parts[0])) {
+            emails.push({ stt: index + 1, email: parts[0] });
+        }
+    });
 
-  document.getElementById("kpiLeft").innerText = kpiLeft;
-  document.getElementById("totalBonus").innerText = totalBonus;
-
-  for (let entry of workEntries) {
-    addRowToTable(entry);
-  }
-});
-
-function addEntry() {
-  let day = document.getElementById('dayInput').value;
-  let gom = parseInt(document.getElementById('xuGomInput').value);
-  let done = parseInt(document.getElementById('xuDoneInput').value);
-
-  if (!day || isNaN(gom) || isNaN(done)) {
-    alert("Vui lòng nhập đầy đủ thông tin ngày, xu gom và xu done.");
-    return;
-  }
-
-  let bonus = 0;
-  let total = gom + done;
-  if (total > 11000) bonus = 1000;
-  else if (total > 8000) bonus = 500;
-
-  kpiLeft -= gom;
-  totalBonus += bonus;
-
-  let entry = { day, gom, done, bonus };
-  workEntries.push(entry);
-
-  addRowToTable(entry);
-  document.getElementById("kpiLeft").innerText = kpiLeft;
-  document.getElementById("totalBonus").innerText = totalBonus;
-
-  localStorage.setItem("kpiLeft", kpiLeft);
-  localStorage.setItem("totalBonus", totalBonus);
-  localStorage.setItem("workEntries", JSON.stringify(workEntries));
-
-  document.getElementById('xuGomInput').value = '';
-  document.getElementById('xuDoneInput').value = '';
+    displayEmails(emails);
 }
 
-function addRowToTable(entry) {
-  let row = `<tr><td>${entry.day}</td><td>${entry.gom}</td><td>${entry.done}</td><td>${entry.bonus}</td></tr>`;
-  document.querySelector("#workTable tbody").innerHTML += row;
+function displayEmails(emails) {
+    let html = `<table>
+                  <tr>
+                    <th>STT</th>
+                    <th>Sao chép</th>
+                    <th>Email</th>
+                  </tr>`;
+
+    emails.forEach(item => {
+        html += `<tr>
+                   <td>${item.stt}</td>
+                   <td><button class="copy-btn" onclick="copyEmail('${item.email}', ${item.stt})">📋</button></td>
+                   <td>${item.email}</td>
+                 </tr>`;
+    });
+
+    html += `</table>`;
+    document.getElementById("outputTable").innerHTML = html;
 }
 
-function resetData() {
-  if (!confirm("Bạn chắc chắn muốn xóa toàn bộ dữ liệu không? Hành động này không thể hoàn tác.")) {
-    return;
-  }
+function copyEmail(email, index) {
+    navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById("toast");
+        toast.innerText = `📧 Đã sao chép email ${index}`;
+        toast.classList.remove("hidden");
+        setTimeout(() => {
+            toast.classList.add("hidden");
+        }, 3000);
+    });
+}
 
-  kpiLeft = kpiGoal;
-  totalBonus = 0;
-  workEntries = [];
+function pasteClipboard() {
+    navigator.clipboard.readText().then((text) => {
+        document.getElementById("inputEmails").value = text;
+    });
+}
 
-  localStorage.setItem("kpiLeft", kpiLeft);
-  localStorage.setItem("totalBonus", totalBonus);
-  localStorage.setItem("workEntries", JSON.stringify(workEntries));
-
-  document.getElementById("kpiLeft").innerText = kpiLeft;
-  document.getElementById("totalBonus").innerText = totalBonus;
-  document.querySelector("#workTable tbody").innerHTML = "";
-
-  alert("Dữ liệu đã được xóa!");
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
