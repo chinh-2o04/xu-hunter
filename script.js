@@ -1,3 +1,10 @@
+function pasteAndFilter() {
+    navigator.clipboard.readText().then((text) => {
+        document.getElementById("inputEmails").value = text;
+        filterEmails(); // Gọi luôn lọc sau khi dán
+    });
+}
+
 function filterEmails() {
     const input = document.getElementById("inputEmails").value.trim();
     const lines = input.split(/\r?\n/);
@@ -42,12 +49,6 @@ function copyEmail(email, index) {
         setTimeout(() => {
             toast.classList.add("hidden");
         }, 3000);
-    });
-}
-
-function pasteClipboard() {
-    navigator.clipboard.readText().then((text) => {
-        document.getElementById("inputEmails").value = text;
     });
 }
 
