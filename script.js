@@ -1,8 +1,16 @@
-function pasteAndFilter() {
-    navigator.clipboard.readText().then((text) => {
+async function pasteAndFilter() {
+    try {
+        const text = await navigator.clipboard.readText();
+        if (!text) {
+            showToast("⚠️ Không có nội dung clipboard để dán.");
+            return;
+        }
         document.getElementById("inputEmails").value = text;
-        filterEmails(); // Gọi luôn lọc sau khi dán
-    });
+        filterEmails();
+    } catch (err) {
+        showToast("⚠️ Trình duyệt không cho phép truy cập clipboard. Hãy dán thủ công.");
+        console.error("Lỗi dán clipboard:", err);
+    }
 }
 
 function filterEmails() {
@@ -43,15 +51,19 @@ function displayEmails(emails) {
 
 function copyEmail(email, index) {
     navigator.clipboard.writeText(email).then(() => {
-        const toast = document.getElementById("toast");
-        toast.innerText = `📧 Đã sao chép email ${index}`;
-        toast.classList.remove("hidden");
-        setTimeout(() => {
-            toast.classList.add("hidden");
-        }, 3000);
+        showToast(`📧 Đã sao chép email ${index}`);
     });
 }
 
 function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.classList.remove("hidden");
+    setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 3000);
 }
