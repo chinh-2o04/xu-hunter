@@ -65,5 +65,5 @@ function showToast(message) {
     toast.classList.remove("hidden");
     setTimeout(() => {
         toast.classList.add("hidden");
-    }, 3000);
+    }, 30000);
 }
