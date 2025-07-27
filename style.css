@@ -1,80 +1,93 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f2f7;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding-top: 40px;
-}
-
-.container {
-  width: 90%;
-  max-width: 600px;
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.title {
+  font-family: 'Arial', sans-serif;
   text-align: center;
-  margin-bottom: 15px;
-  font-size: 20px;
+  margin: 0;
+  padding: 0 10px;
+  background-color: #fff;
 }
 
-textarea {
-  width: 100%;
-  height: 100px;
-  font-size: 16px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  resize: none;
-}
-
-.email-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+h1 {
+  font-family: 'Impact', sans-serif;
+  font-size: 32px;
   margin-top: 20px;
 }
 
-.email-item {
-  background: #e5e5ea;
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 14px;
+.paste-filter {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 45%;
-  word-break: break-all;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  margin: 20px auto;
+  flex-wrap: wrap;
 }
 
-.copy-btn {
-  background: #007aff;
-  color: white;
+.paste-filter button {
+  font-size: 20px;
+  padding: 10px 15px;
+  background-color: #57c3ff;
   border: none;
-  padding: 6px 10px;
-  font-size: 13px;
-  border-radius: 8px;
-  margin-left: 10px;
+  border-radius: 12px;
+  font-weight: bold;
   cursor: pointer;
+  width: 100px;
+}
+
+.paste-filter textarea {
+  width: 70%;
+  height: 60px;
+  font-size: 16px;
+  border: 2px solid #0099ff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+h2 {
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 24px;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.mail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  padding: 20px 0;
+}
+
+.mail-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.mail-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #ffdcd4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  user-select: none;
+}
+
+.mail-label {
+  margin-top: 5px;
+  font-size: 14px;
 }
 
 .copy-alert {
   position: fixed;
-  bottom: 20px;
+  top: 40%;
   left: 50%;
-  transform: translateX(-50%);
-  background: #34c759;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 999px;
-  display: none;
+  transform: translate(-50%, -50%);
+  background: #baffeb;
+  padding: 15px 25px;
+  border-radius: 12px;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  font-size: 18px;
+  display: none;
   z-index: 999;
 }
