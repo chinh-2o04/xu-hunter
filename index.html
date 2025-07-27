@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lọc Mail</title>
+  <title>Lọc Mail Nhanh</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Lọc Email</h2>
-    <textarea id="inputEmails" placeholder="Dán danh sách email vào đây..."></textarea>
-    <button onclick="pasteAndFilter()">📋 Dán nhanh & Lọc</button>
-    <div id="outputTable"></div>
-    <div id="toast" class="toast hidden">Đã sao chép!</div>
+    <h2 class="title">Lọc Mail Nhanh</h2>
+    <textarea id="input" placeholder="Nhấn dán nội dung vào đây..."></textarea>
+    <div id="emailList" class="email-grid"></div>
   </div>
+
+  <div id="copyAlert" class="copy-alert">Đã sao chép</div>
+
   <script src="script.js"></script>
 </body>
 </html>
