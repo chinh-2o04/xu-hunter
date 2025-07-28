@@ -1,6 +1,5 @@
 function pasteAndFilter() {
   navigator.clipboard.readText().then(text => {
-    document.getElementById('inputArea').value = text;
     renderMails(filterEmails(text));
   }).catch(err => {
     alert("Không thể dán từ clipboard: " + err);
