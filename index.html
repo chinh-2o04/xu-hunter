@@ -2,18 +2,23 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lọc mail</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lọc Mail</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body onclick="handlePaste()">
+<body>
+  <h1>Danh sách mail</h1>
 
-  <div class="center">
-    <h1>Danh sách mail</h1>
-    <p class="sub">Chạm bất kỳ đâu để dán và lọc</p>
-    <div id="mailList" class="mail-list"></div>
-    <div class="footer">Thanks ❤️</div>
+  <div class="paste-filter">
+    <button onclick="pasteAndFilter()">DÁN, LỌC</button>
   </div>
+
+  <h2>MAIL</h2>
+  <div id="mailGrid" class="mail-grid"></div>
+
+  <div id="copyAlert" class="copy-alert">Đã sao chép</div>
+
+  <footer>Thanks ❤️</footer>
 
   <script src="script.js"></script>
 </body>
