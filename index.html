@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lọc email</title>
+  <title>Lọc mail</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Danh sách mail</h1>
+<body onclick="handlePaste()">
 
-  <div id="autoPasteBox" class="auto-paste-box" onclick="autoPaste()">Chạm để dán và lọc</div>
-
-  <div id="mailList" class="mail-list"></div>
-
-  <div class="footer">Thanks ❤️</div>
+  <div class="center">
+    <h1>Danh sách mail</h1>
+    <p class="sub">Chạm bất kỳ đâu để dán và lọc</p>
+    <div id="mailList" class="mail-list"></div>
+    <div class="footer">Thanks ❤️</div>
+  </div>
 
   <script src="script.js"></script>
 </body>
