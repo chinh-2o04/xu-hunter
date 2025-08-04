@@ -1,54 +1,79 @@
 body {
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  font-family: sans-serif;
-  background: #f9f9f9;
-  text-align: center;
+  padding: 0;
+  background-color: #fdfdfd;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 }
 
-#tap-area {
-  padding: 40px 20px;
+.center-box {
+  margin-top: 60px;
   font-size: 18px;
-  color: #555;
-  background: #e9e9ff;
-  cursor: pointer;
+  background-color: #e3f3ff;
+  padding: 20px 30px;
+  border-radius: 16px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-#email-list {
+.mail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 12px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 10px;
+  padding: 20px 15px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
 }
 
-.email-item {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 14px;
+.mail-item {
+  text-align: center;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.email-item:hover {
-  background: #f0f8ff;
+.mail-icon {
+  width: 55px;
+  height: 55px;
+  background-color: #ffdcd4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  user-select: none;
 }
 
-#copied-alert {
+.mail-label {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #333;
+}
+
+.copy-alert {
   position: fixed;
-  bottom: 50px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 24px;
+  transform: translate(-50%, -50%);
+  background: #baffeb;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: bold;
   font-size: 16px;
   display: none;
+  z-index: 999;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 footer {
-  margin: 20px 0;
-  font-size: 13px;
+  margin: 30px 0 10px;
+  font-size: 14px;
   color: #aaa;
 }
