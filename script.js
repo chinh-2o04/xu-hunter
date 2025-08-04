@@ -1,15 +1,10 @@
-let clickCount = 0;
-
-function handleClick() {
-  clickCount++;
-  if (clickCount === 2) {
-    navigator.clipboard.readText().then(text => {
-      const emails = filterEmails(text);
-      renderMails(emails);
-    }).catch(err => {
-      alert("Không thể dán từ clipboard: " + err);
-    });
-  }
+function pasteAndFilter() {
+  navigator.clipboard.readText().then(text => {
+    const emails = filterEmails(text);
+    renderMails(emails);
+  }).catch(err => {
+    alert("Không thể dán từ clipboard: " + err);
+  });
 }
 
 function filterEmails(text) {
