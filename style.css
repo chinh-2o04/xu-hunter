@@ -1,84 +1,53 @@
 body {
-  font-family: 'Arial', sans-serif;
-  text-align: center;
+  font-family: system-ui, sans-serif;
+  padding: 20px;
   margin: 0;
-  padding: 0;
+  text-align: center;
   background-color: #fff;
 }
 
 h1 {
-  font-family: 'Impact', sans-serif;
   font-size: 28px;
-  margin-top: 20px;
-}
-
-.paste-filter {
-  margin: 15px 0;
-}
-
-.paste-filter button {
-  font-size: 18px;
-  padding: 10px 20px;
-  background-color: #57c3ff;
-  border: none;
-  border-radius: 12px;
   font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.auto-paste-box {
+  background-color: #007bff;
+  color: white;
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 16px;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
 }
 
-h2 {
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 20px;
-  text-align: left;
-  margin-left: 10px;
-}
-
-.mail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 8px;
-  justify-items: center;
-  padding: 10px 15px;
+.mail-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .mail-item {
-  text-align: center;
+  padding: 10px 14px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  font-size: 15px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.mail-icon {
-  width: 55px;
-  height: 55px;
-  background-color: #ffdcd4;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  user-select: none;
+.mail-item:hover {
+  background-color: #d1ecf1;
 }
 
-.mail-label {
-  margin-top: 4px;
-  font-size: 13px;
-}
-
-.copy-alert {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #baffeb;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 16px;
-  display: none;
-  z-index: 999;
-}
-
-footer {
-  margin: 40px 0 20px;
+.footer {
   font-size: 14px;
-  color: #999;
+  color: gray;
+  margin-top: 40px;
 }
