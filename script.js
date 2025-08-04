@@ -17,7 +17,8 @@ function renderMails(emails) {
     const item = document.createElement("div");
     item.className = "mail-item";
     item.textContent = `Mail ${index + 1}: ${email}`;
-    item.onclick = () => {
+    item.onclick = (e) => {
+      e.stopPropagation(); // để không gọi lại handlePaste khi nhấn mail
       navigator.clipboard.writeText(email);
       alert(`Đã sao chép: ${email}`);
     };
@@ -25,14 +26,18 @@ function renderMails(emails) {
   });
 }
 
-function autoPaste() {
+let hasPasted = false;
+
+function handlePaste() {
+  if (hasPasted) return; // chỉ dán 1 lần
+  hasPasted = true;
+
   navigator.clipboard.readText()
     .then(text => {
       const emails = filterEmails(text);
       renderMails(emails);
-      document.getElementById("autoPasteBox").style.display = "none";
     })
     .catch(() => {
-      alert("Không thể truy cập clipboard. Hãy thử dán thủ công.");
+      alert("Không thể dán nội dung. Hãy đảm bảo bạn đã sao chép nội dung trước.");
     });
 }
