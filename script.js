@@ -1,43 +1,55 @@
-function filterEmails(text) {
-  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
-  const found = text.match(emailRegex);
-  return found ? [...new Set(found)] : [];
-}
-
-function renderMails(emails) {
-  const mailList = document.getElementById("mailList");
-  mailList.innerHTML = "";
-
-  if (emails.length === 0) {
-    mailList.innerHTML = "<p>Không tìm thấy email nào.</p>";
-    return;
-  }
-
-  emails.forEach((email, index) => {
-    const item = document.createElement("div");
-    item.className = "mail-item";
-    item.textContent = `Mail ${index + 1}: ${email}`;
-    item.onclick = (e) => {
-      e.stopPropagation(); // để không gọi lại handlePaste khi nhấn mail
-      navigator.clipboard.writeText(email);
-      alert(`Đã sao chép: ${email}`);
-    };
-    mailList.appendChild(item);
+function pasteAndFilter() {
+  navigator.clipboard.readText().then(text => {
+    renderMails(filterEmails(text));
+  }).catch(err => {
+    alert("Không thể dán từ clipboard: " + err);
   });
 }
 
-let hasPasted = false;
+function filterEmails(text) {
+  const lines = text.split('\n').map(line => line.trim());
+  const emails = [];
 
-function handlePaste() {
-  if (hasPasted) return; // chỉ dán 1 lần
-  hasPasted = true;
+  for (const line of lines) {
+    const match = line.match(/^([^\s|]+@[^\s|]+)(?:[\s|]+.*)?$/);
+    if (match) {
+      emails.push(match[1]);
+    }
+  }
+  return emails;
+}
 
-  navigator.clipboard.readText()
-    .then(text => {
-      const emails = filterEmails(text);
-      renderMails(emails);
-    })
-    .catch(() => {
-      alert("Không thể dán nội dung. Hãy đảm bảo bạn đã sao chép nội dung trước.");
-    });
+function renderMails(emails) {
+  const grid = document.getElementById('mailGrid');
+  grid.innerHTML = '';
+
+  emails.forEach((email, index) => {
+    const item = document.createElement('div');
+    item.className = 'mail-item';
+    item.onclick = () => copyEmail(email, index + 1);
+
+    const icon = document.createElement('div');
+    icon.className = 'mail-icon';
+    icon.innerHTML = '✉️';
+
+    const label = document.createElement('div');
+    label.className = 'mail-label';
+    label.textContent = `Mail ${index + 1}`;
+
+    item.appendChild(icon);
+    item.appendChild(label);
+    grid.appendChild(item);
+  });
+}
+
+function copyEmail(email, index) {
+  navigator.clipboard.writeText(email).then(() => {
+    showAlert(`Đã sao chép mail ${index}`);
+  });
+}
+
+function showAlert(message) {
+  const alertBox = document.getElementById('copyAlert');
+  alertBox.textContent = message;
+  alertBox.style.display = 'block';
 }
