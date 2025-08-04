@@ -1,79 +1,61 @@
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #fdfdfd;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
+let clickCount = 0;
+
+function handleClick() {
+  clickCount++;
+  if (clickCount === 2) {
+    navigator.clipboard.readText().then(text => {
+      const emails = filterEmails(text);
+      renderMails(emails);
+    }).catch(err => {
+      alert("Không thể dán từ clipboard: " + err);
+    });
+  }
 }
 
-.center-box {
-  margin-top: 60px;
-  font-size: 18px;
-  background-color: #e3f3ff;
-  padding: 20px 30px;
-  border-radius: 16px;
-  color: #333;
-  font-weight: bold;
-  text-align: center;
-  max-width: 80%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+function filterEmails(text) {
+  const lines = text.split('\n').map(line => line.trim());
+  const emails = [];
+
+  for (const line of lines) {
+    const match = line.match(/^([^\s|]+@[^\s|]+)(?:[\s|]+.*)?$/);
+    if (match) {
+      emails.push(match[1]);
+    }
+  }
+  return emails;
 }
 
-.mail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 10px;
-  padding: 20px 15px;
-  width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
+function renderMails(emails) {
+  const grid = document.getElementById('mailGrid');
+  grid.innerHTML = '';
+
+  emails.forEach((email, index) => {
+    const item = document.createElement('div');
+    item.className = 'mail-item';
+    item.onclick = () => copyEmail(email, index + 1);
+
+    const icon = document.createElement('div');
+    icon.className = 'mail-icon';
+    icon.innerHTML = '✉️';
+
+    const label = document.createElement('div');
+    label.className = 'mail-label';
+    label.textContent = `Mail ${index + 1}`;
+
+    item.appendChild(icon);
+    item.appendChild(label);
+    grid.appendChild(item);
+  });
 }
 
-.mail-item {
-  text-align: center;
-  cursor: pointer;
+function copyEmail(email, index) {
+  navigator.clipboard.writeText(email).then(() => {
+    showAlert(`Đã sao chép mail ${index}`);
+  });
 }
 
-.mail-icon {
-  width: 55px;
-  height: 55px;
-  background-color: #ffdcd4;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  user-select: none;
-}
-
-.mail-label {
-  margin-top: 4px;
-  font-size: 13px;
-  color: #333;
-}
-
-.copy-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #baffeb;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 16px;
-  display: none;
-  z-index: 999;
-  color: #222;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-footer {
-  margin: 30px 0 10px;
-  font-size: 14px;
-  color: #aaa;
+function showAlert(message) {
+  const alertBox = document.getElementById('copyAlert');
+  alertBox.textContent = message;
+  alertBox.style.display = 'block';
 }
