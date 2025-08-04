@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lọc Mail</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-  <div id="tap-area">Nhấn vào màn hình để dán nội dung</div>
-  <div id="email-list"></div>
-  <div id="copied-alert"></div>
-  <footer>Thanks</footer>
+<body onclick="handleClick()">
+
+  <div class="center-box" id="centerBox">
+    <p>Nhấn để dán và lọc mail</p>
+  </div>
+
+  <div id="mailGrid" class="mail-grid"></div>
+
+  <div id="copyAlert" class="copy-alert">Đã sao chép</div>
+
+  <footer>Thanks ❤️</footer>
+
   <script src="script.js"></script>
 </body>
 </html>
